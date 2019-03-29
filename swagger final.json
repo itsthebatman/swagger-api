@@ -1,0 +1,318 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "version": "1.0.0",
+    "title": "Product Management"
+  },
+  "schemes": [
+    "https",
+    "http"
+  ],
+  "host": "localhost:3000",
+  "basePath": "/",
+  "paths": {
+    "/product": {
+      "get": {
+        "summary": "Search for products using least 1, max 4 queries",
+        "operationId": "searchProducts",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "pName",
+            "type": "string"
+          },
+          {
+            "in": "query",
+            "name": "pCategory",
+            "type": "string"
+          },
+          {
+            "in": "query",
+            "name": "pBrand",
+            "type": "string"
+          },
+          {
+            "in": "query",
+            "name": "pPrice",
+            "type": "number"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Products matching the string",
+            "schema": {
+              "$ref": "#/definitions/listProducts"
+            }
+          },
+          "404": {
+            "description": "No product with matching queries found"
+          },
+          "default": {
+            "description": "Can't fetch"
+          }
+        }
+      },
+      "post": {
+        "summary": "Add a new product",
+        "operationId": "postProduct",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "pInfo",
+            "schema": {
+              "$ref": "#/definitions/product"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Product added"
+          },
+          "201": {
+            "description": "Product created"
+          }
+        }
+      },
+      "put": {
+        "summary": "Modify existing product",
+        "operationId": "putProduct",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "pInfo",
+            "schema": {
+              "$ref": "#/definitions/product"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Product modified"
+          },
+          "404": {
+            "description": "Product not found"
+          }
+        }
+      },
+      "delete": {
+        "summary": "Delete existing product",
+        "operationId": "deleteProduct",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "pId",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Product deleted"
+          },
+          "404": {
+            "description": "Product not found"
+          }
+        }
+      }
+    },
+    "/category": {
+      "get": {
+        "summary": "Search for categories",
+        "operationId": "searchCategory",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "cId",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Category matching the query",
+            "schema": {
+              "$ref": "#/definitions/category"
+            }
+          },
+          "404": {
+            "description": "No category with matching query found"
+          },
+          "default": {
+            "description": "All Categories",
+            "schema": {
+              "$ref": "#/definitions/listCategory"
+            }
+          }
+        }
+      },
+      "post": {
+        "summary": "Add a new category",
+        "operationId": "postCategory",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "cInfo",
+            "schema": {
+              "$ref": "#/definitions/category"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Category created"
+          },
+          "409": {
+            "description": "Category already exists"
+          }
+        }
+      },
+      "put": {
+        "summary": "Modify existing product",
+        "operationId": "putCategory",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "cInfo",
+            "schema": {
+              "$ref": "#/definitions/category"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Category modified"
+          },
+          "404": {
+            "description": "Category not found"
+          }
+        }
+      },
+      "delete": {
+        "summary": "Delete existing product",
+        "operationId": "deleteCategory",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "cId",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "202": {
+            "description": "Category deleted"
+          },
+          "404": {
+            "description": "Category not found"
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "listProducts": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": {
+        "type": "object",
+        "properties": {
+          "pName": {
+            "type": "string"
+          },
+          "pType": {
+            "type": "boolean"
+          },
+          "pBrand": {
+            "type": "string"
+          },
+          "pColors": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "pPrice": {
+            "type": "number",
+            "format": "float"
+          },
+          "pStock": {
+            "type": "integer"
+          },
+          "pState": {
+            "type": "boolean"
+          },
+          "pCategory": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "product": {
+      "type": "object",
+      "properties": {
+        "pId": {
+          "type": "string"
+        },
+        "pName": {
+          "type": "string"
+        },
+        "pType": {
+          "type": "boolean"
+        },
+        "pBrand": {
+          "type": "string"
+        },
+        "pColors": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "pPrice": {
+          "type": "number",
+          "format": "float"
+        },
+        "pStock": {
+          "type": "integer"
+        },
+        "pState": {
+          "type": "boolean"
+        },
+        "pCategory": {
+          "type": "number"
+        }
+      }
+    },
+    "category": {
+      "type": "object",
+      "properties": {
+        "cId": {
+          "type": "number"
+        },
+        "cName": {
+          "type": "string"
+        },
+        "pCount": {
+          "type": "number"
+        },
+        "parent": {
+          "type": "number"
+        }
+      }
+    },
+    "listCategory": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "cName": {
+            "type": "string"
+          },
+          "pCount": {
+            "type": "number"
+          },
+          "parent": {
+            "type": "number"
+          }
+        }
+      }
+    }
+  }
+}
